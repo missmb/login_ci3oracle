@@ -7,10 +7,10 @@ class Menu_Model extends CI_Model
 
     public function getSubMenu()
     {
-        $query = " SELECT `user_sub_menu`.*, `user_menu`.
-        `menu`
-        FROM `user_sub_menu` JOIN `user_menu`
-        ON `user_sub_menu`.`menu_id` = `user_menu`.`id`";
+        $query = " SELECT `USER_SUB_MENU`.*, `USER_MENU`.
+        `MENU`
+        FROM `USER_SUB_MENU` JOIN `USER_MENU`
+        ON `USER_SUB_MENU`.`MENU_ID` = `USER_MENU`.`MENU_ID`";
 
         return $this->db->query($query)->result_array();
     }
@@ -24,16 +24,34 @@ class Menu_Model extends CI_Model
             'icon' => $icon,
             'is_active' => $is_active,
         );
-        $this->db->where('id', $id);
-        $this->db->update('user_sub_menu', $data);
+        $this->db->where('SUB_ID', $id);
+        $this->db->update('USER_SUB_MENU', $data);
     }
 
     public function update($id, $menu)
     {
         $data = array(
-            'menu' => $menu
+            'MENU' => $menu
         );
-        $this->db->where('id', $id);
-        $this->db->update('user_menu', $data);
+        $this->db->where('MENU_ID', $id);
+        $this->db->update('USER_MENU', $data);
     }
+
+    public function Sidebar()
+    {
+        $role_id = $this->session->userdata('role_id');
+
+        $query = " SELECT USER_MENU.MENU_ID, USER_MENU.MENU
+                       FROM USER_MENU JOIN USER_ACCESS_MENU
+                           ON USER_MENU.MENU_ID = USER_ACCESS_MENU.MENU_ID
+                        WHERE USER_ACCESS_MENU.ROLE_ID =$role_id 
+                     ORDER BY USER_ACCESS_MENU.MENU_ID ASC";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function SidebarSubMenu(){
+        
+    }
+
+    
 }

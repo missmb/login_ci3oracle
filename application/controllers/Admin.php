@@ -15,7 +15,7 @@ class Admin extends CI_Controller
     public function index()
     {
         $data['title'] = 'Dashboard';
-        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['user'] = $this->db->get_where('USER_SYS', ['EMAIL' => $this->session->userdata('email')])->row_array();
         // echo 'welcome '.$data['user']['name'];
 
         $this->load->view('template/header', $data);
@@ -28,8 +28,8 @@ class Admin extends CI_Controller
     public function Role()
     {
         $data['title'] = 'Role';
-        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-        $data['role'] = $this->db->get('user_role')->result_array();
+        $data['user'] = $this->db->get_where('USER_SYS', ['EMAIL' => $this->session->userdata('email')])->row_array();
+        $data['role'] = $this->db->get('USER_ROLE')->result_array();
     
         $this->load->view('template/header', $data);
         $this->load->view('template/sidebar', $data);
@@ -41,11 +41,11 @@ class Admin extends CI_Controller
     public function roleAccess($role_id)
     {
         $data['title'] = 'Role Access';
-        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-        $data['role'] = $this->db->get_where('user_role', ['id' => $role_id])->row_array();
+        $data['user'] = $this->db->get_where('USER_SYS', ['EMAIL' => $this->session->userdata('email')])->row_array();
+        $data['role'] = $this->db->get_where('USER_ROLE', ['ROLE_ID' => $role_id])->row_array();
 
-        $this->db->where('id !=', 1);
-        $data['menu'] = $this->db->get('user_menu')->result_array();
+        $this->db->where('ROLE_ID !=', 1);
+        $data['menu'] = $this->db->get('USER_MENU')->result_array();
     
         $this->load->view('template/header', $data);
         $this->load->view('template/sidebar', $data);
@@ -60,18 +60,18 @@ class Admin extends CI_Controller
         $role_id = $this->input->post('roleId');
   
         $data = [
-            'role_id' => $role_id,
-            'menu_id' => $menu_id
+            'ROLE_ID' => $role_id,
+            'MENU_ID' => $menu_id
         ];
 
-        $result = $this->db->get_where('user_access_menu', $data);
+        $result = $this->db->get_where('USER_ACCESS_MENU', $data);
 
         if($result->num_rows() < 1) {
-            $this->db->insert('user_access_menu', $data);
+            $this->db->insert('USER_ACCESS_MENU', $data);
 
         } 
         else {
-            $this->db->delete('user_access_menu', $data);
+            $this->db->delete('USER_ACCESS_MENU', $data);
 
         }
 

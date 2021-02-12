@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use App\Models\Menu_Model;
+
 class User extends CI_Controller
 {
     public function __construct()
@@ -10,20 +12,17 @@ class User extends CI_Controller
         if (!$this->session->userdata('email')) {
             redirect('auth');
             // ini kalo belum login
-        } 
-        // else if ($this->session->userdata('role_id') == 1) {
-
-        //     redirect('auth');
-        //     //panggil function
-        // }
+        }
+        $this->load->model('Menu_Model');
     }
 
     public function index()
     {
+        // var_dump($this->Menu_Model->Sidebar());die();
         $data['title'] = 'My Profile';
         $data['user'] = $this->db->get_where('USER_SYS', ['EMAIL' => $this->session->userdata('email')])->row_array();
         // echo 'welcome '.$data['user']['name'];
-
+        $data['try'] = $this->Menu_Model->Sidebar();
         $this->load->view('template/header', $data);
         $this->load->view('template/sidebar', $data);
         $this->load->view('template/topbar', $data);
@@ -31,13 +30,14 @@ class User extends CI_Controller
         $this->load->view('template/footer', $data);
     }
 
-    public function edit(){
+    public function edit()
+    {
         $data['title'] = 'Edit Profile';
         $data['user'] = $this->db->get_where('USER_SYS', ['EMAIL' => $this->session->userdata('email')])->row_array();
-        
+
         $this->form_validation->set_rules('name', 'Full Name', 'required|trim');
 
-        if($this->form_validation->run() == false){
+        if ($this->form_validation->run() == false) {
 
             $this->load->view('template/header', $data);
             $this->load->view('template/sidebar', $data);
@@ -50,21 +50,21 @@ class User extends CI_Controller
 
             $upload_image = $_FILES['image']['name'];
 
-            if($upload_image){
+            if ($upload_image) {
                 $config['allowed_types'] = 'gif|jpg|png';
                 $config['max_size'] = '2048';
                 $config['upload_path'] = './assets/img/profile/';
 
                 $this->load->library('upload', $config);
 
-                if($this->upload->do_upload('image')){
+                if ($this->upload->do_upload('image')) {
                     $old_image = $data['user']['image'];
-                    if($old_image != 'default.jpg'){
-                        unlink(FCPATH . 'assets/img/profile/' . $old_image); 
+                    if ($old_image != 'default.jpg') {
+                        unlink(FCPATH . 'assets/img/profile/' . $old_image);
                     }
                     $new_image = $this->upload->data('file_name');
                     $this->db->set('image', $new_image);
-                }else {
+                } else {
                     echo  $this->upload->display_errors();
                 }
             }
@@ -74,7 +74,7 @@ class User extends CI_Controller
             $this->db->update('USER_SYS');
 
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Your Profile has been updated!</div>');
-        redirect('user');
+            redirect('user');
         }
     }
 
@@ -82,11 +82,11 @@ class User extends CI_Controller
     {
         $data['title'] = 'Change Password';
         $data['user'] = $this->db->get_where('USER_SYS', ['EMAIL' => $this->session->userdata('email')])->row_array();
-        
+
         $this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');
         $this->form_validation->set_rules('new_password1', 'New Password', 'required|trim|min_length[6]|matches[new_password2]');
         $this->form_validation->set_rules('new_password2', 'Confirm New Password', 'required|trim|min_length[6]|matches[new_password1]');
-        if($this->form_validation->run() == false){
+        if ($this->form_validation->run() == false) {
             $this->load->view('template/header', $data);
             $this->load->view('template/sidebar', $data);
             $this->load->view('template/topbar', $data);
@@ -100,17 +100,17 @@ class User extends CI_Controller
                 $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Wrong current password!</div>');
                 redirect('user/changepassword');
             } else {
-                if($current_password == $new_password){
+                if ($current_password == $new_password) {
                     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">New password cannot be the same as current password!</div>');
-                redirect('user/changepassword');
-                } else  {
+                    redirect('user/changepassword');
+                } else {
                     $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
                     $this->db->set('PASSWORD', $password_hash);
                     $this->db->where('EMAIL', $this->session->userdata('email'));
                     $this->db->update('USER_SYS');
 
                     $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Ppassword Changed!</div>');
-                redirect('user/changepassword');
+                    redirect('user/changepassword');
                 }
             }
         }

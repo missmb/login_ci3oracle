@@ -13,8 +13,8 @@ class Menu extends CI_Controller
     public function index()
     {
         $data['title'] = 'Menu Management';
-        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-        $data['menu'] = $this->db->get('user_menu')->result_array();
+        $data['user'] = $this->db->get_where('USER_SYS', ['EMAIL' => $this->session->userdata('email')])->row_array();
+        $data['menu'] = $this->db->get('USER_MENU')->result_array();
 
         $this->form_validation->set_rules('menu', 'Menu', 'required');
 
@@ -26,7 +26,7 @@ class Menu extends CI_Controller
             $this->load->view('menu/index', $data);
             $this->load->view('template/footer', $data);
         } else {
-            $this->db->insert('user_menu', ['menu' => $this->input->post('menu')]);
+            $this->db->insert('USER_MENU', ['MENU' => $this->input->post('menu')]);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">New menu added!</div>');
             redirect('menu');
         }
@@ -40,7 +40,7 @@ class Menu extends CI_Controller
 
         // $data['subMenu'] = $this->db->get('user_sub_menu')->result_array();
         $data['subMenu'] = $this->menu->getSubMenu();
-        $data['menu'] = $this->db->get('user_menu')->result_array();
+        $data['menu'] = $this->db->get('USER_MENU')->result_array();
 
         $this->form_validation->set_rules('title', 'Title', 'required');
         $this->form_validation->set_rules('menu_id', 'Menu_id', 'required');
@@ -69,7 +69,7 @@ class Menu extends CI_Controller
 
     public function delete($id)
     {
-        $this->db->delete('user_menu', array('id' => $id));
+        $this->db->delete('USER_MENU', array('MENU_ID' => $id));
         redirect('menu');
     }
 
@@ -77,10 +77,10 @@ class Menu extends CI_Controller
     {
         $data['title'] = 'Edit Menu';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-        $data['menu'] = $this->db->get('user_menu')->result_array();
+        $data['menu'] = $this->db->get('USER_MENU')->result_array();
         // $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
-        $this->form_validation->set_rules('menu', 'Menu', 'is_unique[user_menu.menu]', [
+        $this->form_validation->set_rules('menu', 'Menu', 'is_unique[USER_MENU.MENU]', [
             'is_unique' => 'This menu aready exist',
         ]);
 
@@ -109,8 +109,8 @@ class Menu extends CI_Controller
     public function editSubMenu()
     {
         $data['title'] = 'Edit Menu';
-        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-        $data['menu'] = $this->db->get('user_menu')->result_array();
+        $data['user'] = $this->db->get_where('USER_SYS', ['EMAIL' => $this->session->userdata('email')])->row_array();
+        $data['menu'] = $this->db->get('USER_MENU')->result_array();
         if ($this->input->post('title') > 0) {
 
             $this->form_validation->set_rules('title', 'title', 'is_unique[user_sub_menu.title]', [

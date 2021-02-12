@@ -21,10 +21,10 @@
                     <?php foreach ($menu as $m) : ?>
                         <tr>
                             <th scope="row"><?= $i; ?></th>
-                            <th><?= $m['menu']; ?></th>
+                            <th><?= $m['MENU']; ?></th>
                             <th>
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" <?= check_access($role['id'], $m['id']); ?> data-role="<?= $role['id']; ?>" data-menu="<?= $m['id']; ?>">
+                                    <input type="checkbox" class="form-check-input" <?= check_access($role['ROLE_ID'], $m['MENU_ID']); ?> data-role="<?= $role['ROLE_ID']; ?>" data-menu="<?= $m['MENU_ID']; ?>">
                                 </div>
                             </th>
                         </tr>

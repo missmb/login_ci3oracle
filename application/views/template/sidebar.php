@@ -6,59 +6,40 @@
           <div class="sidebar-brand-icon rotate-n-15">
               <i class="fas fa-code"></i>
           </div>
-          <div class="sidebar-brand-text mx-3">Are Admin </div>
+          <div class="sidebar-brand-text mx-3">LoginSys</div>
       </a>
 
       <!-- Divider -->
       <hr class="sidebar-divider">
 
-      <!-- QUERY MENU -->
-      <?php
-        $role_id = $this->session->userdata('role_id');
 
-        $queryMenu = "SELECT `user_menu`.`id`,`menu`
-                            FROM `user_menu` JOIN `user_access_menu`
-                            ON `user_menu`.`id` = `user_access_menu`.`menu_id`
-                            WHERE `user_access_menu`.`role_id` = $role_id
-                        ORDER BY `user_access_menu`.`menu_id` ASC
-                        ";
-        $menu = $this->db->query($queryMenu)->result_Array();
-        // var_dump($menu);die;
-        ?>
-      <!-- LOOPING MENU -->
-      <?php foreach ($menu as $m) : ?>
+      <?php foreach ($try as $m) : ?>
           <div class="sidebar-heading">
-              <?= $m['menu']; ?>
+              <?= $m['MENU']; ?>
           </div>
           <!-- LOOPING SUB MENU -->
           <?php
-            $menuId = $m['id'];
+            $menuId = $m['MENU_ID'];
             $querySubMenu =  "SELECT *
-                                    FROM `user_sub_menu` JOIN `user_menu`
-                                    ON `user_sub_menu`.`menu_id` = `user_menu`.`id`
-                                    WHERE `user_sub_menu`.`menu_id` = $menuId
-                                AND `user_sub_menu`.`is_active` = 1
+                                    FROM USER_SUB_MENU JOIN USER_MENU
+                                    ON USER_SUB_MENU.MENU_ID = USER_MENU.MENU_ID
+                                    WHERE USER_SUB_MENU.MENU_ID = $menuId
+                                AND USER_SUB_MENU.IS_ACTIVE = 1
             ";
             $subMenu = $this->db->query($querySubMenu)->result_Array();
             ?>
 
           <?php foreach ($subMenu as $sm) : ?>
-              <?php if ($title == $sm['title']) : ?>
+              <?php if ($title == $sm['TITLE']) : ?>
                   <li class="nav-item active">
                   <?php else : ?>
                   <li class="nav-item">
                   <?php endif; ?>
-                  <a class="nav-link pb-0" href="<?= base_url($sm['url']); ?>">
-                      <i class="<?= $sm['icon']; ?>"></i>
-                      <span><?= $sm['title']; ?></span></a>
+                  <a class="nav-link pb-0" href="<?= base_url($sm['URL']); ?>">
+                      <i class="<?= $sm['ICON']; ?>"></i>
+                      <span><?= $sm['TITLE']; ?></span></a>
                   </li>
               <?php endforeach; ?>
-              <!--
-            $querySubMenu =  "SELECT * FROM `user_sub_menu` 
-                                    WHERE `user_sub_menu`.`menu_id` = $menuId
-                                AND `user_sub_mrnu`.`is_active` = 1
-            ";
-         -->
               <hr class="sidebar-divider mt-3">
 
           <?php endforeach; ?>
