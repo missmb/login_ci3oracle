@@ -25,14 +25,14 @@ function is_logged_in()
 
 
         //query ini mengambil data berdasrkan variabel $menu 
-        $queryMenu = $ci->db->get_where('USER_MENU', ['MENU' => $menu])->row_array();
+        // $queryMenu = $ci->db->get_where('USER_MENU', ['MENU' => $menu])->row_array();
 
 
         $userAccess = $ci->db->get_where(
             'USER_ACCESS_MENU',
             ['ROLE_ID' => $role_id, 'MENU_ID' => $menu_id]
         );
-        // var_dump($menu_id);die;
+        // var_dump($queryMenu);die;
         // var_dump($queryMenu);die;
         if ($userAccess->num_rows() < 1) {
             // var_dump($userAccess->num_rows());die;

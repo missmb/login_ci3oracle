@@ -13,7 +13,7 @@
       <hr class="sidebar-divider">
 
 
-      <?php foreach ($try as $m) : ?>
+      <?php foreach ($menu as $m) : ?>
           <div class="sidebar-heading">
               <?= $m['MENU']; ?>
           </div>

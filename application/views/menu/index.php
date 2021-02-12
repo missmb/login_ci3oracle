@@ -22,10 +22,10 @@
                     <?php foreach ($menu as $m) : ?>
                         <tr>
                             <th scope="col"><?= $i; ?></th>
-                            <th scope="col"><?= $m['menu']; ?></th>
+                            <th scope="col"><?= $m['MENU']; ?></th>
                             <th scope="col">
-                                <a data-toggle="modal" data-id=<?= $m['id']; ?> data-menu=<?= $m['menu']; ?> data-target="#editMenu" class="badge badge-success">edit</a>
-                                <a href="<?= base_url('menu/delete/' . $m['id']); ?>" class="badge badge-danger">delete</a>
+                                <a data-toggle="modal" data-id=<?= $m['MENU_ID']; ?> data-menu=<?= $m['MENU']; ?> data-target="#editMenu" class="badge badge-success">edit</a>
+                                <a href="<?= base_url('menu/delete/' . $m['MENU_ID']); ?>" class="badge badge-danger">delete</a>
                             </th>
                         </tr>
                         <?php $i++ ?>
@@ -92,25 +92,3 @@
         </div>
     </div>
 </div>
-
-
-<!-- Delete Menu -->
-
-<!-- <div class="modal fade" id="deleteMenu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Are you sure want to delete menu?</div>
-                <input type="text" id="id" name="id">
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="<?= base_url('menu/delete/' . $i); ?>">delete</a>
-                </div>
-            </div>
-        </div>
-    </div> -->

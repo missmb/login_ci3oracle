@@ -30,14 +30,14 @@
                     <?php foreach ($subMenu as $sm) : ?>
                         <tr>
                             <th scope="col"><?= $i; ?></th>
-                            <th scope="col"><?= $sm['title']; ?></th>
-                            <th scope="col"><?= $sm['menu']; ?></th>
-                            <th scope="col"><?= $sm['url']; ?></th>
-                            <th scope="col"><?= $sm['icon']; ?></th>
-                            <th scope="col"><?= $sm['is_active']; ?></th>
+                            <th scope="col"><?= $sm['TITLE']; ?></th>
+                            <th scope="col"><?= $sm['MENU']; ?></th>
+                            <th scope="col"><?= $sm['URL']; ?></th>
+                            <th scope="col"><?= $sm['ICON']; ?></th>
+                            <th scope="col"><?= $sm['IS_ACTIVE']; ?></th>
                             <th scope="col">
-                            <a data-toggle="modal" data-id=<?= $sm['id']; ?> data-menu_id=<?= $sm['menu_id'] ; ?> data-title="<?= $sm['title'] ; ?>"  data-url=<?= $sm['url'] ; ?>  data-icon="<?= $sm['icon'] ; ?>" data-is_active=<?= $sm['is_active'] ; ?> data-target="#editSubMenu" class="badge badge-success">edit</a>
-                                <a href="<?= base_url('menu/deleteSubMenu/' . $sm['id']); ?>" class="badge badge-danger">delete</a>
+                            <a data-toggle="modal" data-id=<?= $sm['SUB_ID']; ?> data-menu_id=<?= $sm['MENU_ID'] ; ?> data-title="<?= $sm['TITLE'] ; ?>"  data-url=<?= $sm['URL'] ; ?>  data-icon="<?= $sm['ICON'] ; ?>" data-is_active=<?= $sm['IS_ACTIVE'] ; ?> data-target="#editSubMenu" class="badge badge-success">edit</a>
+                                <a href="<?= base_url('menu/deleteSubMenu/' . $sm['SUB_ID']); ?>" class="badge badge-danger">delete</a>
                             </th>
                         </tr>
                         <?php $i++ ?>
@@ -72,7 +72,7 @@
                         <select name="menu_id" id="menu_id" class="form-control">
                             <option value="">Select Menu</option>
                             <?php foreach ($menu as $m) : ?>
-                                <option value="<?= $m['id']; ?>"><?= $m['menu']; ?></option>
+                                <option value="<?= $m['MENU_ID']; ?>"><?= $m['MENU']; ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -119,7 +119,7 @@
                         <select name="menu_id" id="menu_id" class="form-control">
                             <option value="">Select Menu</option>
                             <?php foreach ($menu as $m) : ?>
-                                <option value="<?= $m['id']; ?>"><?= $m['menu']; ?></option>
+                                <option value="<?= $m['MENU_ID']; ?>"><?= $m['MENU']; ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>

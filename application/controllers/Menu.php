@@ -7,7 +7,6 @@ class Menu extends CI_Controller
     {
         parent::__construct();
         is_logged_in();
-        $this->load->model('Menu_Model');
     }
 
     public function index()
@@ -35,7 +34,7 @@ class Menu extends CI_Controller
     public function submenu()
     {
         $data['title'] = 'SubMenu Management';
-        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['user'] = $this->db->get_where('USER_SYS', ['EMAIL' => $this->session->userdata('email')])->row_array();
         $this->load->model('Menu_Model', 'menu'); //alias menu
 
         // $data['subMenu'] = $this->db->get('user_sub_menu')->result_array();
@@ -55,13 +54,13 @@ class Menu extends CI_Controller
             $this->load->view('template/footer', $data);
         } else {
             $data = [
-                'title' => $this->input->post('title'),
-                'menu_id' => $this->input->post('menu_id'),
-                'url' => $this->input->post('url'),
-                'icon' => $this->input->post('icon'),
-                'is_active' => $this->input->post('is_active')
+                'TITLE' => $this->input->post('title'),
+                'MENU_ID' => $this->input->post('menu_id'),
+                'URL' => $this->input->post('url'),
+                'ICON' => $this->input->post('icon'),
+                'IS_ACTIVE' => $this->input->post('is_active')
             ];
-            $this->db->insert('user_sub_menu', $data);
+            $this->db->insert('USER_SUB_MENU', $data);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">New sub menu added!</div>');
             redirect('menu/submenu');
         }
@@ -76,7 +75,7 @@ class Menu extends CI_Controller
     public function edit()
     {
         $data['title'] = 'Edit Menu';
-        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['user'] = $this->db->get_where('USER_SYS', ['EMAIL' => $this->session->userdata('email')])->row_array();
         $data['menu'] = $this->db->get('USER_MENU')->result_array();
         // $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
@@ -102,7 +101,7 @@ class Menu extends CI_Controller
 
     function deleteSubMenu($id)
     {
-        $this->db->delete('user_sub_menu', array('id' => $id));
+        $this->db->delete('USER_SUB_MENU', array('SUB_ID' => $id));
         redirect('menu/submenu');
     }
 
