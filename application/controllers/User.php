@@ -18,10 +18,9 @@ class User extends CI_Controller
 
     public function index()
     {
-        // var_dump($this->Menu_Model->Sidebar());die();
         $data['title'] = 'My Profile';
         $data['user'] = $this->db->get_where('USER_SYS', ['EMAIL' => $this->session->userdata('email')])->row_array();
-        // echo 'welcome '.$data['user']['name'];
+
         $data['menu'] = $this->Menu_Model->Sidebar();
         $this->load->view('template/header', $data);
         $this->load->view('template/sidebar', $data);
@@ -34,6 +33,7 @@ class User extends CI_Controller
     {
         $data['title'] = 'Edit Profile';
         $data['user'] = $this->db->get_where('USER_SYS', ['EMAIL' => $this->session->userdata('email')])->row_array();
+        $data['menu'] = $this->Menu_Model->Sidebar();
 
         $this->form_validation->set_rules('name', 'Full Name', 'required|trim');
 
@@ -58,12 +58,13 @@ class User extends CI_Controller
                 $this->load->library('upload', $config);
 
                 if ($this->upload->do_upload('image')) {
-                    $old_image = $data['user']['image'];
+                    $old_image = $data['user']['IMAGE'];
+                    // VAR_DUMP($old_image);DIE();
                     if ($old_image != 'default.jpg') {
                         unlink(FCPATH . 'assets/img/profile/' . $old_image);
                     }
                     $new_image = $this->upload->data('file_name');
-                    $this->db->set('image', $new_image);
+                    $this->db->set('IMAGE', $new_image);
                 } else {
                     echo  $this->upload->display_errors();
                 }
@@ -82,6 +83,7 @@ class User extends CI_Controller
     {
         $data['title'] = 'Change Password';
         $data['user'] = $this->db->get_where('USER_SYS', ['EMAIL' => $this->session->userdata('email')])->row_array();
+        $data['menu'] = $this->Menu_Model->Sidebar();
 
         $this->form_validation->set_rules('current_password', 'Current Password', 'required|trim');
         $this->form_validation->set_rules('new_password1', 'New Password', 'required|trim|min_length[6]|matches[new_password2]');
@@ -96,7 +98,7 @@ class User extends CI_Controller
             $current_password = $this->input->post('current_password');
             $new_password = $this->input->post('new_password1');
 
-            if (!password_verify($current_password, $data['user']['password'])) {
+            if (!password_verify($current_password, $data['user']['PASSWORD'])) {
                 $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Wrong current password!</div>');
                 redirect('user/changepassword');
             } else {

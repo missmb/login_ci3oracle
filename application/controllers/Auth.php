@@ -261,7 +261,7 @@ class Auth extends CI_Controller
                 redirect('auth');
             }
         } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">EReset password failed! Wrong email.</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Reset password failed! Wrong email.</div>');
             redirect('auth');
         }
     }

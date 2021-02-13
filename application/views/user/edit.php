@@ -10,14 +10,14 @@
             <div class="form-group row">
                 <label for="email" class="col-sm-2 col-form-label">Email</label>
                 <div class="col-sm-10">
-                    <input type="text" name="email" id="email" class="form-control" value="<?= $user['email']; ?>" readonly>
+                    <input type="text" name="email" id="email" class="form-control" value="<?= $user['EMAIL']; ?>" readonly>
 
                 </div>
             </div>
             <div class="form-group row">
                 <label for="name" class="col-sm-2 col-form-label">Full name</label>
                 <div class="col-sm-10">
-                    <input type="text" name="name" id="name" class="form-control" value="<?= $user['name']; ?>" >
+                    <input type="text" name="name" id="name" class="form-control" value="<?= $user['NAME']; ?>" >
                     <?= form_error('name', '<small class="text-danger pl-3">', '</small>'); ?>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                 <div class="col-sm-9">
                     <div class="row">
                         <div class="col-sm-3">
-                            <img src="<?= base_url('assets/img/profile/').$user['image']; ?>" class="img-thumbnail" alt="">
+                            <img src="<?= base_url('assets/img/profile/').$user['IMAGE']; ?>" class="img-thumbnail" alt="">
                         </div>
                         <div class="col-sm-9">
                             <div class="custom-file">
