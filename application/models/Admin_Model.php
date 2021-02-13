@@ -13,4 +13,14 @@ class Admin_Model extends CI_Model
         $this->db->where('PARKING_ID', $id);
         $this->db->update('PARKING_AREA', $data);
     }
+
+    public function UpdateTransport($id, $type)
+    {
+        $data = array(
+            'TYPE' => $type
+        );
+        // var_dump($data);die();
+        $this->db->where('TRANSPORT_ID', $id);
+        $this->db->update('TRANSPORT', $data);
+    }
 }

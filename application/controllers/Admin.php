@@ -110,8 +110,7 @@ class Admin extends CI_Controller
         $data['title'] = 'Edit Area';
         $data['user'] = $this->db->get_where('USER_SYS', ['EMAIL' => $this->session->userdata('email')])->row_array();
         $data['menu'] = $this->db->get('USER_MENU')->result_array();
-        // $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-
+        
         $this->form_validation->set_rules('area', 'Area', 'is_unique[PARKING_AREA.AREA]', [
             'is_unique' => 'This menu aready exist',
         ]);
@@ -126,10 +125,66 @@ class Admin extends CI_Controller
         } else {
             $id = $this->input->post('parking_id');
             $area = $this->input->post('area');
-            // var_dump($area);die();
             $this->Admin_Model->update($id, $area);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Your Area has been updated!</div>');
             redirect('admin/parking');
         }
     }
+    
+    // ----------------------------------------------------------------Tranportation -----------------------------
+    public function Transport(){
+        $data['title'] = 'Transportation';
+        $data['user'] = $this->db->get_where('USER_SYS', ['EMAIL' => $this->session->userdata('email')])->row_array();
+        $data['transport'] = $this->db->get('TRANSPORT')->result_array();
+        $data['menu'] = $this->db->get('USER_MENU')->result_array();
+
+        $this->form_validation->set_rules('type', 'type', 'required');
+
+        if ($this->form_validation->run() == false) {
+
+            $this->load->view('template/header', $data);
+            $this->load->view('template/sidebar', $data);
+            $this->load->view('template/topbar', $data);
+            $this->load->view('admin/tranport', $data);
+            $this->load->view('template/footer', $data);
+        } else {
+            // var_dump($this->input->post('type'));die();
+            $this->db->insert('TRANSPORT', ['TYPE' => $this->input->post('type')]);
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">New Transportation added!</div>');
+            redirect('admin/transport');
+        }
+    }
+
+    public function deletetransport($id)
+    {
+        $this->db->delete('TRANSPORT', array('TRANSPORT_ID' => $id));
+        redirect('admin/transport');
+    }
+
+    public function TransportEdit()
+    {
+        $data['title'] = 'Edit Transport';
+        $data['user'] = $this->db->get_where('USER_SYS', ['EMAIL' => $this->session->userdata('email')])->row_array();
+        $data['menu'] = $this->db->get('USER_MENU')->result_array();
+
+        $this->form_validation->set_rules('type', 'type', 'is_unique[TRANSPORT.TYPE]', [
+            'is_unique' => 'This menu aready exist',
+        ]);
+
+        if ($this->form_validation->run() == false) {
+
+            $this->load->view('template/header', $data);
+            $this->load->view('template/sidebar', $data);
+            $this->load->view('template/topbar', $data);
+            $this->load->view('admin/transport', $data);
+            $this->load->view('template/footer', $data);
+        } else {
+            $id = $this->input->post('transport_id');
+            $type = $this->input->post('type');
+            $this->Admin_Model->UpdateTransport($id, $type);
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Transportation has been updated!</div>');
+            redirect('admin/transport');
+        }
+    }
+
 }

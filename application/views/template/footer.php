@@ -106,6 +106,15 @@
                     $(this).find('.modal-body #parking_id').val(parking_id)
                     $(this).find('.modal-body #area').val(area)
                 })
+                
+                $('#editTransport').on('show.bs.modal', function(event) {
+                    let transport_id = $(event.relatedTarget).data('transport_id')
+                    let type = $(event.relatedTarget).data('type')
+                    console.log(transport_id)
+                    $(this).find('.modal-body #transport_id').val(transport_id)
+                    $(this).find('.modal-body #type').val(type)
+                })
+
             </script>
             </body>
 
