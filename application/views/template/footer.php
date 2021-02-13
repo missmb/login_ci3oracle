@@ -99,6 +99,13 @@
                     $(this).find('.modal-body #icon').val(icon)
                     $(this).find('.modal-body #is_active').val(is_active)
                 })
+
+                $('#editArea').on('show.bs.modal', function(event) {
+                    let parking_id = $(event.relatedTarget).data('parking_id')
+                    let area = $(event.relatedTarget).data('area')
+                    $(this).find('.modal-body #parking_id').val(parking_id)
+                    $(this).find('.modal-body #area').val(area)
+                })
             </script>
             </body>
 

@@ -8,24 +8,24 @@
         <div class="col-lg-6">
             <?= form_error('menu', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
             <?= $this->session->flashdata('message'); ?>
-            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newMenuModal">Add New Menu</a>
+            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newParkingModel">Add New Menu</a>
             <table class="table table-hover">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Menu</th>
+                        <th scope="col">Area</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php $i = 1; ?>
-                    <?php foreach ($menu as $m) : ?>
+                    <?php foreach ($parking as $v) : ?>
                         <tr>
                             <th scope="col"><?= $i; ?></th>
-                            <th scope="col"><?= $m['MENU']; ?></th>
+                            <th scope="col"><?= $v['AREA']; ?></th>
                             <th scope="col">
-                                <a data-toggle="modal" data-id=<?= $m['MENU_ID']; ?> data-menu="<?= $m['MENU']; ?>" data-target="#editMenu" class="badge badge-success">edit</a>
-                                <a href="<?= base_url('menu/delete/' . $m['MENU_ID']); ?>" class="badge badge-danger">delete</a>
+                                <a data-toggle="modal" data-parking_id=<?= $v['PARKING_ID']; ?> data-area="<?= $v['AREA']; ?>" data-target="#editArea" class="badge badge-success">edit</a>
+                                <a href="<?= base_url('admin/deletearea/' . $v['PARKING_ID']); ?>" class="badge badge-danger">delete</a>
                             </th>
                         </tr>
                         <?php $i++ ?>
@@ -42,19 +42,19 @@
 <!-- End of Main Content -->
 
 <!-- Modal -->
-<div class="modal fade" id="newMenuModal" tabindex="-1" role="dialog" aria-labelledby="newMenuModalLabel" aria-hidden="true">
+<div class="modal fade" id="newParkingModel" tabindex="-1" role="dialog" aria-labelledby="newParkingModelLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="newMenuModalLabel">Add New Menu</h5>
+                <h5 class="modal-title" id="newParkingModelLabel">Add New Area</h5>
                 <button type="submit" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('menu'); ?>" method="POST">
+            <form action="<?= base_url('admin/parking'); ?>" method="POST">
                 <div class="modal-body">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="menu" name="menu" placeholder="Menu Name">
+                        <input type="text" class="form-control" id="area" name="area" placeholder="Area Name">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -66,22 +66,22 @@
     </div>
 </div>
 
-<!-- Edit Menu -->
+<!-- Edit Area -->
 
-<div class="modal fade" id="editMenu" tabindex="-1" role="dialog" aria-labelledby="editMenuLabel" aria-hidden="true">
+<div class="modal fade" id="editArea" tabindex="-1" role="dialog" aria-labelledby="editAreaLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editMenuLabel">Edit Menu</h5>
+                <h5 class="modal-title" id="editAreaLabel">Edit Area</h5>
                 <button type="submit" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('menu/edit'); ?>" method="POST">
+            <form action="<?= base_url('admin/parkingedit'); ?>" method="POST">
                 <div class="modal-body">
-                    <input type="hidden" class="form-control" id="menu_id" name="menu_id" value="">
+                    <input type="hidden" class="form-control" id="parking_id" name="parking_id" value="">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="menu" name="menu" value="">
+                        <input type="text" class="form-control" id="area" name="area" value="">
                     </div>
                 </div>
                 <div class="modal-footer">
