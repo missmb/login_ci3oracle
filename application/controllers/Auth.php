@@ -99,7 +99,7 @@ class Auth extends CI_Controller
                 'ROLE_ID' => 2,
                 'PASSWORD' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
                 'IS_ACTIVE' => 0,
-                'DATE_CREATED' => Date('d-M-s')
+                'DATE_CREATED' => Date('d-M-y')
             ];
 
             $int = 33;
@@ -109,7 +109,7 @@ class Auth extends CI_Controller
             $user_token = [
                 'EMAIL' => $email,
                 'TOKEN' => $token,
-                'DATE_CREATED' => Date('d-M-s')
+                'DATE_CREATED' => Date('d-M-y')
             ];
 
             $this->db->insert('USER_SYS', $data);

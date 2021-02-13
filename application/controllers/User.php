@@ -8,12 +8,7 @@ class User extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        //is_logged_in();
-        if (!$this->session->userdata('email')) {
-            redirect('auth');
-            // ini kalo belum login
-        }
-        $this->load->model('Menu_Model');
+        is_logged_in();
     }
 
     public function index()
@@ -116,5 +111,20 @@ class User extends CI_Controller
                 }
             }
         }
+    }
+
+    // ----------------------------------------------------------------Ticket -----------------------------
+
+    public function Ticket(){
+        $data['title'] = 'TICKET';
+        $data['user'] = $this->db->get_where('USER_SYS', ['EMAIL' => $this->session->userdata('email')])->row_array();
+        $data['ticket'] = $this->User_Model->Ticket();
+        // $data['ticket'] = $this->db->get('TICKET')->result_array();
+        $data['menu'] = $this->Menu_Model->Sidebar();
+        $this->load->view('template/header', $data);
+        $this->load->view('template/sidebar', $data);
+        $this->load->view('template/topbar', $data);
+        $this->load->view('user/ticket/index', $data);
+        $this->load->view('template/footer', $data);
     }
 }
