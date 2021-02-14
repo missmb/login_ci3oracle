@@ -6,7 +6,7 @@ class User_Model extends CI_Model
 {
     public function Ticket()
     {
-        $query = " SELECT T.ENTER, T.EXIT, T.LICENSE_PLATE, T.STNK, S.NAME, P.TYPE, A.AREA, ST.STATUS
+        $query = " SELECT T.TICKET_ID, T.ENTER, T.EXIT, T.LICENSE_PLATE, T.STNK, S.NAME, P.TYPE, A.AREA, ST.STATUS
                         FROM TICKET  T
                     JOIN USER_SYS S ON T.USER_ENTER = S.ID_USER
                     JOIN TRANSPORT P ON T.TRANSPORT_ID = P.TRANSPORT_ID

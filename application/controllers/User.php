@@ -127,4 +127,50 @@ class User extends CI_Controller
         $this->load->view('user/ticket/index', $data);
         $this->load->view('template/footer', $data);
     }
+
+    public function addticket(){
+        $data['title'] = 'Add Ticket';
+        $data['user'] = $this->db->get_where('USER_SYS', ['EMAIL' => $this->session->userdata('email')])->row_array();
+        $data['menu'] = $this->Menu_Model->Sidebar();
+        $data['username'] = $this->db->get('USER_SYS')->result_array();
+        $data['transport'] = $this->db->get('TRANSPORT')->result_array();
+        $data['parking'] = $this->db->get('PARKING_AREA')->result_array();
+
+        $this->form_validation->set_rules('user_enter', 'User Enter', 'required');
+        $this->form_validation->set_rules('transport', 'Transport', 'required');
+        $this->form_validation->set_rules('parking', 'Parking', 'required');
+        $this->form_validation->set_rules('license_plate', 'License Plate', 'required');
+        $this->form_validation->set_rules('stnk', 'STNK', 'required');
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('template/header', $data);
+            $this->load->view('template/sidebar', $data);
+            $this->load->view('template/topbar', $data);
+            $this->load->view('user/ticket/add_ticket', $data);
+            $this->load->view('template/footer', $data);
+        } else {
+            $data = [
+                'ENTER' => Date('d-M-y'),
+                'USER_ENTER' => $this->input->post('user_enter'),
+                'TRANSPORT_ID' => $this->input->post('transport'),
+                'PARKING_ID' => $this->input->post('parking'),
+                'LICENSE_PLATE' => $this->input->post('license_plate'),
+                'STNK' => $this->input->post('stnk')
+            ];
+            $this->db->insert('TICKET', $data);
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">New ticked added!</div>');
+            redirect('user/ticket');
+        }
+    }
+
+    public function ExitUser($id) {
+        $data = [
+            'EXIT' => Date('d-M-y'),
+            'STATUS' => 2,
+        ];
+        // var_dump($data);die();
+        $this->db->where('TICKET_ID', $id)->update('TICKET', $data);
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Success Edit Data!</div>');
+        redirect('user/ticket');
+    }
 }

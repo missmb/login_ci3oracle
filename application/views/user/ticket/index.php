@@ -12,8 +12,9 @@
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">DataTables Parking</h6>
+        <div class="card-header py-3 row">
+                <a href="<?= base_url('user/addticket'); ?>" class="btn btn-tool"><i class="fas fa-plus"></i> Add Ticket
+                </a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -66,7 +67,11 @@
                                         <tr>
                                             <td><?= $i++ ?></td>
                                             <td><?= $v['ENTER'] ?></td>
-                                            <td><?= $v['EXIT'] ?></td>
+                                            <td class="text-center"><?php if ($v['EXIT'] == (NULL)) { ?>
+                                                   <a href="<?= base_url('user/exituser/' . $v['TICKET_ID']); ?>" ><i class="fa fa-times"></i></a>
+                                               <?php } else {
+                                                   echo $v['EXIT'];
+                                                } ?></td>
                                             <td><?= $v['NAME'] ?></td>
                                             <td><?= $v['TYPE'] ?></td>
                                             <td><?= $v['AREA'] ?></td>
@@ -76,7 +81,7 @@
                                                 <?php if ($v['STATUS'] == 'Parked') {
                                                     echo '<i class="fas fa-fw fa-user text-success"></i>';
                                                 } elseif ($v['STATUS'] == 'Exit') {
-                                                    echo '<i class="fas fa-fw fa-check text-white-50"></i>';
+                                                    echo '<i class="fas fa-fw fa-check text-danger"></i>';
                                                 } elseif ($v['STATUS'] == 'Timeout') {
                                                     echo '<i class="fas fa-fw fa-exclamation-triangle text-warning"></i>';
                                                 } ?></td>
