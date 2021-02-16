@@ -22,9 +22,9 @@
                     <?php foreach ($role as $r) : ?>
                         <tr>
                             <th scope="row"><?= $i; ?></th>
-                            <th><?= $r['role']; ?></th>
+                            <th><?= $r['ROLE']; ?></th>
                             <th>
-                                <a href="<?= base_url('admin/roleaccess/'.$r['id']); ?>" class="badge badge-warning">access</a>
+                                <a href="<?= base_url('admin/roleaccess/'.$r['ROLE_ID']); ?>" class="badge badge-warning">access</a>
                                 <a href="" class="badge badge-success">edit</a>
                                 <a href="" class="badge badge-danger">delete</a>
                             </th>

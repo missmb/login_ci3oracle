@@ -27,6 +27,7 @@ class Admin extends CI_Controller
         $data['title'] = 'Role';
         $data['user'] = $this->db->get_where('USER_SYS', ['EMAIL' => $this->session->userdata('email')])->row_array();
         $data['role'] = $this->db->get('USER_ROLE')->result_array();
+        $data['menu'] = $this->db->get('USER_MENU')->result_array();
     
         $this->load->view('template/header', $data);
         $this->load->view('template/sidebar', $data);
@@ -41,7 +42,7 @@ class Admin extends CI_Controller
         $data['user'] = $this->db->get_where('USER_SYS', ['EMAIL' => $this->session->userdata('email')])->row_array();
         $data['role'] = $this->db->get_where('USER_ROLE', ['ROLE_ID' => $role_id])->row_array();
 
-        $this->db->where('ROLE_ID !=', 1);
+        $this->db->where('MENU_ID !=', 1);
         $data['menu'] = $this->db->get('USER_MENU')->result_array();
     
         $this->load->view('template/header', $data);
